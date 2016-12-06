@@ -71,6 +71,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
+        
         getAnnotations()
         
         
