@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 
+// Class that declare properties for the cell
 class BestConditionsCell: UITableViewCell, LocationCellProtocol {
 
     @IBOutlet weak var bestWindDirectIcon: UIImageView!
@@ -32,7 +33,7 @@ class BestConditionsCell: UITableViewCell, LocationCellProtocol {
 
 extension BestConditionsCell {
     
-    
+    // Method that populate the cell
     func populateCell(json: JSON, location: LocationModel) {
         var tempWindDirectionDegree: Double = 0.0
         var tempWaveDirectionDegree: Double = 0.0

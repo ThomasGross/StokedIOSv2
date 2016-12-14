@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 
+// Sets CustomAnnotationViewModel to inherit MKAnnotationView 
 class CustomAnnotationViewModel: MKAnnotationView {
 }
 

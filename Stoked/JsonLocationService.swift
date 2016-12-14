@@ -10,23 +10,21 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-
+// class that provides locationdata
 class JsonLocationService {
     
     var locations: [LocationModel] = []
     
-    
-    // Method that retrives the list of tabs in the url by a specific search
+    // Method that retrives the list of locations in the url by a specific search
     func getLocations(completion: @escaping ([LocationModel]) -> ()) {
         
-        // get request
-        Alamofire.request("http://stokedwebapi.azurewebsites.net/api/api")
+        // GET request
+        Alamofire.request("http://stokedwebapi.azurewebsites.net/api/api", method: .get)
             .validate()
             .responseJSON { response in
                 switch response.result {
                 case .success(let value):
                     let json = JSON(value)
-                    
                     
                     var count = 0
                     
@@ -51,10 +49,6 @@ class JsonLocationService {
                         location.bestWindSpeed = json[count]["BestWindSpeed"].double!
                         location.bestWaveDirection = json[count]["BestWaveDirection"].string!
                         location.bestWaveHeight = json[count]["BestWaveHeight"].double!
-                        
-                        
-                        //TODO
-                        // More properties from model.
                         
                         self.locations.append(location)
                         

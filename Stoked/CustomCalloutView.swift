@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 
+// Class that declare properties for the view
 class CustomCalloutView: UIView {
 
     @IBOutlet weak var locationName: UILabel!
@@ -65,6 +66,7 @@ class CustomCalloutView: UIView {
     
     }
     
+    // Method that is called to populate the View
     func getlocationDetails(location: LocationModel, json: JSON) {
         
         locationName.text = location.locationName

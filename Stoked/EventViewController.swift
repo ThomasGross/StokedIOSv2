@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+// EventViewController controls the Events view
 class EventViewController: UIViewController, UIWebViewDelegate {
 
     @IBOutlet weak var SideMenuButton: UIBarButtonItem!
@@ -17,32 +18,18 @@ class EventViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet var webView: UIWebView!
     
     override func viewDidLoad() {
+        // Setting up the view
         super.viewDidLoad()
         
-
-        
+        // Setting up the navigation to the manu
         SideMenuButton.target = self.revealViewController()
         SideMenuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        
+        // adding gesturerecongnizer
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

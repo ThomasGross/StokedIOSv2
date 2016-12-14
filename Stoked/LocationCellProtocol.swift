@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyJSON
 
+// protocol or interface that all locationCell conform to
 protocol LocationCellProtocol {
     func populateCell(json: JSON, location: LocationModel)
 }

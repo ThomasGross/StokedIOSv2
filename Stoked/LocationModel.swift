@@ -8,6 +8,7 @@
 
 import Foundation
 
+// The model for a location object
 class LocationModel {
 
     //Location ID
@@ -38,17 +39,7 @@ class LocationModel {
     var bestWaveHeight: Double = 0.0
     var bestWaveDirection: String = ""
     
-    
-    // TODO:
-    
-    //Imagedata
-//    var ImgData ImageData { get; set; }
-    
-    //Created by
-//    public string AspUserId { get; set; }
-//    public string FullName { get; set; }
-    
-    
+    // initialiser method
     init(locationId: Int, locationName: String, locationLat: Double, locationLong: Double, locationDescription: String, isSurfLocation: Bool, isSUPLocation: Bool, isWhiteWaterLocation: Bool, showLocation: Bool, creationDate: String, surfDifficulty: Int, supDifficulty: Int, whiteWaterDifficulty: Int, bestWindSpeed: Double, bestWindDirection: String, bestWaveHeight: Double, bestWaveDirection: String) {
         self.locationId = locationId
         self.locationName = locationName
@@ -70,7 +61,7 @@ class LocationModel {
         
     }
     
-    
+    // initialiser method
     init() {
     }
     

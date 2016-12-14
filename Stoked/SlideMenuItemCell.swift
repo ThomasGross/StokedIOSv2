@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Class that declare properties for the cell
 class SlideMenuItemCell: UITableViewCell {
 
     @IBOutlet weak var cellImage: UIImageView!

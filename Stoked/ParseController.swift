@@ -9,8 +9,8 @@
 import Foundation
 import SwiftyJSON
 
+// class that parses the wheater data usable data in the cells
 class ParseController {
-    
     
     var cellDataController = CellDataController()
     
@@ -97,12 +97,6 @@ class ParseController {
         
         return [heightContraints,widthContraints]
     }
-    
-    
-    
-    
-    
-    
     
 }
 

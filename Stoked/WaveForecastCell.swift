@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 
+// Class that declare properties for the cell
 class WaveForecastCell: UITableViewCell, LocationCellProtocol {
     
     // Today
@@ -52,6 +53,7 @@ class WaveForecastCell: UITableViewCell, LocationCellProtocol {
     @IBOutlet weak var fourthDayWaveHeightView: UIView!
     
     
+    // Method that populate the cell
     func populateCell(json: JSON, location: LocationModel) {
         
         var tempWaveHeight: String = ""

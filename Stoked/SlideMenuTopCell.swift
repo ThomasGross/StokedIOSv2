@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Class that declare properties for the cell
 class SlideMenuTopCell: UITableViewCell {
 
     @IBOutlet weak var stokedLogo: UIImageView!

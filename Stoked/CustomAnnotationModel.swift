@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 import MapKit
 
+// Sets CustomAnnotationModel to inherit MKPointAnnotation
 class CustomAnnotationModel: MKPointAnnotation {
     
     var locationId: Int!
 
-    
     override init() {
         
     }

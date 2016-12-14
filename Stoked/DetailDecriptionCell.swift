@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 
+// Class that declare properties for the cell
 class DetailDecriptionCell: UITableViewCell, LocationCellProtocol {
 
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -24,6 +25,8 @@ class DetailDecriptionCell: UITableViewCell, LocationCellProtocol {
     
     var cellDataHelper = CellDataController()
     
+    
+    // Method that populate the cell
     func populateCell(json: JSON, location: LocationModel) {
         
         descriptionTextView.text = location.locationDescription

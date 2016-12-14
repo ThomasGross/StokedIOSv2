@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 
+// Class that declare properties for the cell
 class WindForecastCell: UITableViewCell, LocationCellProtocol {
     
     // Today
@@ -42,7 +43,7 @@ class WindForecastCell: UITableViewCell, LocationCellProtocol {
     @IBOutlet weak var fourthDayName: UILabel!
     
 
-    
+    // Method that populate the cell
     func populateCell(json: JSON, location: LocationModel) {
         
         let parseController = ParseController()

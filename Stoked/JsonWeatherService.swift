@@ -10,11 +10,14 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+// class the provides wheaterdata
 class JsonWeatherService {
     
+    // Method that retrives the weatherdata from a location by a specific search
     func getWeatherForLocation(id: Int , completion: @escaping (JSON) -> ()) {
         
-        Alamofire.request("http://stokedwebapi.azurewebsites.net/api/weatherapi/\(id)")
+        // GET
+        Alamofire.request("http://stokedwebapi.azurewebsites.net/api/weatherapi/\(id)", method: .get)
             .validate()
             .responseJSON { response in
             switch response.result {
@@ -22,8 +25,6 @@ class JsonWeatherService {
                 let json = JSON(value)
                 
                 completion(json)
-                
-                
                 
             case .failure(let error):
                 print(error)

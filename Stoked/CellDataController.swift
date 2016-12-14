@@ -8,6 +8,7 @@
 
 import Foundation
 
+// class that descripes methods used by the cells
 class CellDataController {
     
     func getDirectDegreeFromString(direction: String) -> Double {

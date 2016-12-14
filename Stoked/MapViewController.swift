@@ -12,11 +12,13 @@ import CoreLocation
 import Alamofire
 import SwiftyJSON
 
+//
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
-    
+    // Outlet for the segmentedcontol filter
     @IBOutlet weak var segmentedControlForAnnotationOutlet: UISegmentedControl!
     
+    // Action for the segmentedcontol filter
     @IBAction func segmentedControlForAnnotation(_ sender: UISegmentedControl) {
         switch segmentedControlForAnnotationOutlet.selectedSegmentIndex
         {
@@ -33,47 +35,55 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
 
+    // The reference to the ActivityIndicator view
     @IBOutlet weak var locationActivityIndicator:UIActivityIndicatorView!
     
+    // Refrence to the menu navigation button
     @IBOutlet weak var SideMenuButton: UIBarButtonItem!
     
+    // refrence to the mapview in the storyboard
     @IBOutlet weak var MapView: MKMapView!
     
+    // refrence to the calloutbutton View
     @IBOutlet weak var calloutButton: UIButton!
     
+    // Action on the callout button
     @IBAction func calloutbuttonAction(_ sender: UIButton) {
-        
         performSegue(withIdentifier: "segueToDetailView", sender: self)
-        
     }
-    // Tells the whether or not to update userlocation
+    
+    // Tells whether or not to update userlocation
     var relocation : Bool = false
     
     // Delegate property for the locationmanager
     var locationManager = CLLocationManager()
     
+    // The instance of the service enables getting the location
     var jsonLocationService = JsonLocationService()
     
+    // The instance of the service enables getting the weather
     var jsonWeatherService = JsonWeatherService()
     
+    // array holding all locations
     var locations: [LocationModel] = []
     
+    // variable holding a temporary weather objekt
     var tempCalloutLocation: JSON?
+    
+    // variable holding a temporary location objekt
     var tempLocation: LocationModel?
     
+    // fist method the controller runs
     override func viewDidLoad() {
+        // setting up the view
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        locationActivityIndicator.startAnimating()
-        
+
+        // Setting up the navigation to the manu
         SideMenuButton.target = self.revealViewController()
         SideMenuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
-        
         getAnnotations()
-        
         
         // sets the delegate to be self
         locationManager.delegate = self
@@ -88,6 +98,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.requestWhenInUseAuthorization()
     }
     
+    // method that runs when the view appears
     override func viewDidAppear(_ animated: Bool) {
         if relocation == true {
             locationManager.startUpdatingLocation()
@@ -95,6 +106,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
+    // method that is called when the application authorizesation is changed
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .authorizedAlways, .authorizedWhenInUse:
@@ -113,12 +125,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
+    // If the locationmanager did update loactions this method is called
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let userLocation = locations.last{  // optional binding
+        // get the last updated location
+        if let userLocation = locations.last{
             
+            // sets the region of the screen
             let region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate,100000,100000)
-            
-            self.MapView.setRegion(region, animated: true) //vis området på kortet
+            self.MapView.setRegion(region, animated: true)
             
             MapView.showsUserLocation = true
         }
@@ -130,6 +144,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
     }
     
+    // sorts the locations depending on user input
     func sortAnnotations(type: Int) {
         self.MapView.removeAnnotations(MapView.annotations)
         
@@ -154,9 +169,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    
-    
+    // method the is called to get locations from location service
     func getAnnotations() {
+        
+        locationActivityIndicator.startAnimating()
         
         DispatchQueue.main.async {
             self.jsonLocationService.getLocations() { responceLocation in
@@ -171,6 +187,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
     }
     
+    // adds all location to the mapview
     func addAnnotations (){
         
         // loops though the list of mapitems in the response
@@ -187,6 +204,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
+    // add one specific annotation to the map
     func addSpecificAnnotation (location: LocationModel){
         
         let customAnnotation = CustomAnnotationModel()
@@ -199,10 +217,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
     }
     
-    
-    
-    
-    //MARK: MKMapViewDelegate
+    // Method that sets up the annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation
         {
@@ -222,50 +237,33 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         annotationView?.image = UIImage(named: "location30x30_GreenColor2")
         return annotationView
     }
+
     
-    
-    // Drop pin animation
-    //    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
-    //        let visibleRect = mapView.annotationVisibleRect
-    //
-    //        for view:MKAnnotationView in views{
-    //            let endFrame:CGRect = view.frame
-    //            var startFrame:CGRect = endFrame
-    //            startFrame.origin.y = visibleRect.origin.y - startFrame.size.height
-    //            view.frame = startFrame;
-    //
-    //            UIView.beginAnimations("drop", context: nil)
-    //
-    //            UIView.setAnimationDuration(1.5)
-    //
-    //            view.frame = endFrame;
-    //
-    //
-    //            UIView.commitAnimations()
-    //        }
-    //    }
-    
-    
-    
+    // called when user selects an annotation
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        // 1 First, the method will check whether the selected annotation is a user location related annotation, in such case, it will return without doing anything.
+        // the method will check whether the selected annotation is a user location related annotation, in this case, it will return without doing anything.
         if view.annotation is MKUserLocation
         {
             // Don't proceed with custom callout
             return
         }
-        // 2
+        
+        // setting up custom annotationView
         let customAnnotation = view.annotation as! CustomAnnotationModel
         
         locationActivityIndicator.startAnimating()
         locationActivityIndicator.isHidden = false
         
+        // loops though allle location to get specific location by id
         for location in locations {
             if location.locationId == customAnnotation.locationId  {
                 
                 tempLocation = location
                 
+                // Runs a new thead
                 DispatchQueue.main.async {
+                    
+                    // Get weather data for lacation
                     self.jsonWeatherService.getWeatherForLocation(id: location.locationId) { responceLocation in
                         
                         self.locationActivityIndicator.stopAnimating()
@@ -294,8 +292,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
     }
     
+    // Method that runs when a user deselects a annotation
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         
+        // removes the calloutview from the user sceen
         if view.isKind(of: CustomAnnotationViewModel.self)
         {
             for subview in view.subviews
@@ -306,8 +306,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
+    // method that is call when the region on the application is changed
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        
+
         if animated == false {
             self.calloutButton.isHidden = true
             
@@ -317,6 +318,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
     }
     
+    // Method that transfers data to the next view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToDetailView" {
             if let vc = segue.destination as? LocationDetailViewController {
@@ -331,7 +333,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             }
         }
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

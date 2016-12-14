@@ -10,7 +10,7 @@ import Foundation
 
 import UIKit
 
-
+// extension that allows shadow and corner effects to be set in the view. By making them @IBInspectable we can configure these views in interface builder.
 extension UIView {
     
     @IBInspectable var shadow: Bool {
