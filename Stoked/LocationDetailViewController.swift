@@ -114,7 +114,9 @@ class LocationDetailViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if arrayOfCellData[indexPath.row].cellId == 1 {
             return 459
-        } else if arrayOfCellData[indexPath.row].cellId == 3 && arrayOfCellData[indexPath.row].cellId == 5 && location.isSurfLocation == true {
+        } else if arrayOfCellData[indexPath.row].cellId == 3 {
+            return 238
+        } else if arrayOfCellData[indexPath.row].cellId == 5 && location.isSurfLocation == true {
             return 238
         } else if arrayOfCellData[indexPath.row].cellId == 2 || arrayOfCellData[indexPath.row].cellId == 4  {
             return 379
